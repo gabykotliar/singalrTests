@@ -1,0 +1,130 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+}
+
+<style type="text/css">
+    .glyphicon-refresh-animate {
+        -animation: spin .7s infinite linear;
+        -webkit-animation: spin2 .7s infinite linear;
+    }
+
+    @@-webkit-keyframes spin2 {
+        from { -webkit-transform: rotate(0deg);}
+        to { -webkit-transform: rotate(360deg);}
+    }
+
+    @@keyframes spin {
+        from { transform: scale(1) rotate(0deg);}
+        to { transform: scale(1) rotate(360deg);}
+    }
+</style>
+
+<h2>Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Clientes</div>
+            <div class="panel-body" id="w3"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Forma de pago</div>
+            <div class="panel-body" id="w1"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Datos de facturación</div>
+            <div class="panel-body" id="w2"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Intermediarios</div>
+            <div class="panel-body" id="w4"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Módulos</div>
+            <div class="panel-body" id="w5"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Coberturas</div>
+            <div class="panel-body" id="w6"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Ubicación del bien</div>
+            <div class="panel-body" id="w7"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Recibo</div>
+            <div class="panel-body" id="w8"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Información del vehiculo</div>
+            <div class="panel-body" id="w9"></div>
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-primary" onclick="load()">Load</button>
+
+@section scripts
+{
+    <script src="/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script type="text/javascript">
+
+        var editor = $.connection.policySequence;
+        var icons = [
+            '',
+            'music',
+            'heart',
+            'fire',
+            'cloud',
+            'film',
+            'eye-close',
+            'paperclip',
+            'bookmark',
+            'tint',
+            'airplane'
+        ];
+
+        // Add client-side hub methods that the server will call
+        $.extend(editor.client, {
+            widgetLoaded: function(data) {
+                $('#w' + data).html('<span class="glyphicon glyphicon-' + icons[data] + '"></span> Loaded.');
+            }
+        });
+
+        // Start the connection
+        $.connection.hub.start();
+
+        function load() {
+
+            $('.panel-body').html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...');
+
+            $.getJSON('http://localhost:19282/api/policy/1');
+        }
+
+    </script>
+}
