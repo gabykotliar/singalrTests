@@ -22,66 +22,66 @@
 </style>
 
 <h2>Dashboard</h2>
-
+<div class="lead">Multiple Data Load</div>
 <div class="row">
     <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Clientes</div>
-            <div class="panel-body" id="w3"></div>
+        <div class="panel panel-default" id="w3">
+            <div class="panel-heading">Lorem</div>
+            <div class="panel-body"></div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Forma de pago</div>
-            <div class="panel-body" id="w1"></div>
+        <div class="panel panel-default" id="w1">
+            <div class="panel-heading">Ipsum</div>
+            <div class="panel-body"></div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Datos de facturación</div>
-            <div class="panel-body" id="w2"></div>
+        <div class="panel panel-default" id="w2">
+            <div class="panel-heading">Dolor sit amet</div>
+            <div class="panel-body"></div>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Intermediarios</div>
-            <div class="panel-body" id="w4"></div>
+        <div class="panel panel-default" id="w4">
+            <div class="panel-heading">Consectetur</div>
+            <div class="panel-body"></div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Módulos</div>
-            <div class="panel-body" id="w5"></div>
+        <div class="panel panel-default" id="w5">
+            <div class="panel-heading">Adipiscing elit</div>
+            <div class="panel-body"></div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Coberturas</div>
-            <div class="panel-body" id="w6"></div>
+        <div class="panel panel-default" id="w6">
+            <div class="panel-heading">Sed do</div>
+            <div class="panel-body"></div>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Ubicación del bien</div>
-            <div class="panel-body" id="w7"></div>
+        <div class="panel panel-default" id="w7">
+            <div class="panel-heading">Eiusmod</div>
+            <div class="panel-body"></div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Recibo</div>
-            <div class="panel-body" id="w8"></div>
+        <div class="panel panel-default" id="w8">
+            <div class="panel-heading">Tempor incididunt</div>
+            <div class="panel-body"></div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Información del vehiculo</div>
-            <div class="panel-body" id="w9"></div>
+        <div class="panel panel-default" id="w9">
+            <div class="panel-heading">Ut labore</div>
+            <div class="panel-body"></div>
         </div>
     </div>
 </div>
@@ -92,9 +92,10 @@
 {
     <script src="/Scripts/jquery.signalR-2.2.0.js"></script>
     <script src="/signalr/hubs"></script>
+
     <script type="text/javascript">
 
-        var editor = $.connection.policySequence;
+        var editor = $.connection.dashboard;
         var icons = [
             '',
             'music',
@@ -111,8 +112,12 @@
 
         // Add client-side hub methods that the server will call
         $.extend(editor.client, {
-            widgetLoaded: function(data) {
-                $('#w' + data).html('<span class="glyphicon glyphicon-' + icons[data] + '"></span> Loaded.');
+            widgetLoaded: function (data) {
+                $('#w' + data.id)
+                    .removeClass('panel-default')
+                    .addClass('panel-primary');
+
+                $('#w' + data.id + ' .panel-body').html('<span class="glyphicon glyphicon-' + icons[data] + '"></span> Loaded in ' + data.delayed + 'ms.');
             }
         });
 
@@ -121,9 +126,9 @@
 
         function load() {
 
-            $('.panel-body').html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...');
+            $('.panel-body.panel-body').html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...');
 
-            $.getJSON('http://localhost:19282/api/policy/1');
+            $.getJSON('http://localhost:19282/api/data/1');
         }
 
     </script>

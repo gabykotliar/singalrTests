@@ -3,8 +3,8 @@ using Microsoft.AspNet.SignalR.Hubs;
 
 namespace SRTest.SignalR
 {
-    [HubName("policySequence")]
-    public class PolicyEditionHub : Hub
+    [HubName("dashboard")]
+    public class DashboardHub : Hub
     {
         public void SendWidgetInfo(string widget)
         {
