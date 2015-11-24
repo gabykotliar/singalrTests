@@ -1,7 +1,7 @@
 ﻿@model dynamic
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Dashboard";
 }
 
 <style type="text/css">
@@ -86,7 +86,7 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-primary" onclick="load()">Load</button>
+<button id="load" type="button" class="btn btn-primary" onclick="load()">Load</button>
 
 @section scripts
 {
@@ -95,7 +95,6 @@
 
     <script type="text/javascript">
 
-        var editor = $.connection.dashboard;
         var icons = [
             '',
             'music',
@@ -110,9 +109,11 @@
             'airplane'
         ];
 
+        var editor = $.connection.dashboard;
+
         // Add client-side hub methods that the server will call
         $.extend(editor.client, {
-            widgetLoaded: function (data) {
+            widgetLoaded: function(data) {
                 $('#w' + data.id)
                     .removeClass('panel-default')
                     .addClass('panel-primary');
@@ -126,9 +127,13 @@
 
         function load() {
 
-            $('.panel-body.panel-body').html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...');
+            $('#load').prop('disabled', true);
 
-            $.getJSON('http://localhost:19282/api/data/1');
+            var fooId = 123;
+
+            editor.server.load(fooId).done(function() {
+                $('#load').prop('disabled', false);
+            });
         }
 
     </script>
