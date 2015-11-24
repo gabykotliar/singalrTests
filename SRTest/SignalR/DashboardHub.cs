@@ -25,7 +25,7 @@ namespace SRTest.SignalR
             for (int widgetId = 1; widgetId < 10; widgetId++)
             {
                 tasks.Add(Task.Factory.StartNew(data => {
-                    var rn = random.Next(1000, 2000);
+                    var rn = random.Next(2000, 4000);
 
                     Thread.Sleep(rn);
 
